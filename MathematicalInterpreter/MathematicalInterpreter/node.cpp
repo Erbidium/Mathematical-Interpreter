@@ -11,6 +11,12 @@ node::node(string data):
 left(nullptr), right(nullptr), data(data)
 {}
 
+node::~node()
+{
+	delete left;
+	delete right;
+}
+
 string node::getData()
 {
 	return data;

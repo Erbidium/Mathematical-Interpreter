@@ -8,6 +8,7 @@ class node
 public:
 	node();
 	node(std::string);
+	~node();
 	std::string getData();
 	void setData(std::string newData);
 	node* getLeft();
