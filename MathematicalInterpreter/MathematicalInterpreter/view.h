@@ -1,7 +1,9 @@
 #pragma once
+#include <string>
+
 class view
 {
 public:
-	static string enterNameOfFile();
+	static std::string enterNameOfFile();
 };
 
