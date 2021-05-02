@@ -4,6 +4,7 @@
 #include "fileReader.h"
 #include "view.h"
 #include "tokenizer.h"
+#include "expressionTree.h"
 
 using namespace std;
 
@@ -13,5 +14,7 @@ int main()
 	string fileName, expression;
     fileName=view::enterNameOfFile();
 	fileReader::readVariablesAndExpression(fileName, variables, expression);
-	vector<string> tokensFormExpression=tokenizer::splitExpressionIntoTokens(expression);
+	vector<string> tokensFromExpression=tokenizer::splitExpressionIntoTokens(expression);
+	expressionTree currentTree;
+	currentTree.buildTree(tokensFromExpression);
 }
