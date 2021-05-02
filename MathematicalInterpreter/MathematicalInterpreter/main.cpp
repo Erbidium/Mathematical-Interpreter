@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-	unordered_map<string, int> variables;
+	unordered_map<string, string> variables;
 	string fileName, expression;
     fileName=view::enterNameOfFile();
 	fileReader::readVariablesAndExpression(fileName, variables, expression);

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-void fileReader::readVariablesAndExpression(string fileName, unordered_map<string, int>& variables, string &expression)
+void fileReader::readVariablesAndExpression(string fileName, unordered_map<string, string>& variables, string &expression)
 {
 	ifstream inFile(fileName);
 	if(!inFile)
@@ -27,7 +27,7 @@ void fileReader::readVariablesAndExpression(string fileName, unordered_map<strin
 			string numberOfVariable=stringsFromFile[i].substr(indexOfName+3);
 			numberOfVariable.pop_back();
 			//cout<<numberOfVariable<<endl;
-			variables.insert(make_pair(variableName, stoi(numberOfVariable)));
+			variables.insert(make_pair(variableName, numberOfVariable));
 		}
 		expression=stringsFromFile.back();
 	}
