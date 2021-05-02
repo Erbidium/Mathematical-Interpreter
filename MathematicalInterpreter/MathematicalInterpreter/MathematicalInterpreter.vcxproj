@@ -139,12 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="node.cpp" />
     <ClCompile Include="fileReader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="tokenizer.cpp" />
     <ClCompile Include="view.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="node.h" />
     <ClInclude Include="fileReader.h" />
     <ClInclude Include="tokenizer.h" />
     <ClInclude Include="view.h" />
