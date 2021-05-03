@@ -155,6 +155,7 @@ void expressionTree::buildTree(std::vector<string> stringsFromFile)
     root = stList;
     for (int i = 0; i < stringsFromFile.size(); i++) {
         string str = tokenizer::deleteWhiteSpaces(stringsFromFile[i]);
+        cout << str << endl;
         if (str.find('=') != (-1)) {
             node* statement = new node("=");
             int equalPosition = str.find('=');
@@ -166,8 +167,14 @@ void expressionTree::buildTree(std::vector<string> stringsFromFile)
             stList->setChildren(statement, counter++);
         }
         else {
-            if (str[0] == 'i' && str[1] == 'f') {
-
+            if (str[0] == 'i' && str[1] == 'f'){
+                string condition = str.substr(str.find('(')+1);
+                condition[condition.length() - 1] = ';';
+                node* statement = new node("if");
+                cout << "cond " << condition << endl;
+                statement->setLeft(buildExpressionTree(tokenizer::splitExpressionIntoTokens(condition)));
+                cout << "Check" << endl;
+                stList->setChildren(statement, counter++);
             }
             else {
                 stList->setChildren(buildExpressionTree(tokenizer::splitExpressionIntoTokens(str)), counter++);
@@ -182,10 +189,15 @@ void expressionTree::printTree(const string& prefix, node* node, bool isLeft)
         cout << prefix;
         cout << (isLeft ? char(195) : char(192)) << char(196) << char(196);
         cout << node->getData() << endl;
-        for (int i = 0; i < node->getNumberOfChildrens() - 1;i++) {
-            printTree(prefix + (isLeft ? "|   " : "    "), node->getChildren(i), true);
+        if (node->getRight() == nullptr) {
+            printTree(prefix + (isLeft ? "|   " : "    "), node->getChildren(0), false);
         }
-        printTree(prefix + (isLeft ? "|   " : "    "), node->getChildren(node->getNumberOfChildrens() - 1), false);
+        else {
+            for (int i = 0; i < node->getNumberOfChildrens() - 1; i++) {
+                printTree(prefix + (isLeft ? "|   " : "    "), node->getChildren(i), true);
+            }
+            printTree(prefix + (isLeft ? "|   " : "    "), node->getChildren(node->getNumberOfChildrens() - 1), false);
+        }
     }
 }
 
