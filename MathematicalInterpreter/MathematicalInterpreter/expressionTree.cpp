@@ -165,6 +165,14 @@ void expressionTree::buildTree(std::vector<string> stringsFromFile)
             statement->setRight(buildExpressionTree(tokenizer::splitExpressionIntoTokens(value)));
             stList->setChildren(statement, counter++);
         }
+        else {
+            if (str[0] == 'i' && str[1] == 'f') {
+
+            }
+            else {
+                stList->setChildren(buildExpressionTree(tokenizer::splitExpressionIntoTokens(str)), counter++);
+            }
+        }
     }
 }
 
