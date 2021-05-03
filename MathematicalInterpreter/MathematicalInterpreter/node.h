@@ -16,4 +16,7 @@ public:
 	node* getRight();
 	void setRight(node* newRight);
 	void setLeft(node* newLeft);
+	void setChildren(node * childrenNode, int index);
+	int getNumberOfChildrens();
+	node * getChildren(int index);
 };

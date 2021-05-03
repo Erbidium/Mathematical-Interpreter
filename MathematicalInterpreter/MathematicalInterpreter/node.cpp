@@ -8,8 +8,7 @@ node::node()
 	nodes.resize(2, nullptr);
 }
 
-node::node(string data):
-data(data)
+node::node(string data):data(data)
 {
 	nodes.resize(2, nullptr);
 }
@@ -45,4 +44,21 @@ void node::setRight(node* newRight)
 void node::setLeft(node* newLeft)
 {
 	nodes[0]=newLeft;
+}
+
+void node::setChildren(node* childrenNode, int index)
+{
+	if(index+1>nodes.size()) 
+		nodes.resize(index+1);
+	nodes[index]=childrenNode;
+}
+
+int node::getNumberOfChildrens()
+{
+	return nodes.size();
+}
+
+node* node::getChildren(int index)
+{
+	return nodes[index];
 }
