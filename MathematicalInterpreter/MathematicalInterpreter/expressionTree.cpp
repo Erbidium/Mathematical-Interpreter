@@ -39,8 +39,7 @@ void expressionTree::buildTree(std::vector<std::string> tokensFromExpression)
                 if(currentOperation.name ==  '-' && tokensFromExpression[i-1] == "(")operations.push('m');
                 else
                 if (((previousOperation.name == '(' && currentOperation.name == ')'))) {
-                    node* tempNode = new node(currentToken);
-                    nodes.push(tempNode);
+                    operations.pop();
                 }
                 else if ((currentOperation.name == '(') || (previousOperation.name == '('))
                 {
