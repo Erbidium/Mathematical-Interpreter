@@ -5,5 +5,6 @@ class view
 {
 public:
 	static std::string enterNameOfFile();
+	static void unsuccessfulOpening();
 };
 

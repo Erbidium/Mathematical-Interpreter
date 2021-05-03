@@ -10,3 +10,8 @@ string view::enterNameOfFile()
 	cin>>fileName;
 	return fileName;
 }
+
+void view::unsuccessfulOpening()
+{
+	cout<<"Can't open the file!\n";
+}

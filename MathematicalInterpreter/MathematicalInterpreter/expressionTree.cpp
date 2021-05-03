@@ -145,15 +145,6 @@ void expressionTree::buildTree(std::vector<std::string> tokensFromExpression)
         operations.pop();
     }
     root = nodes.top();
-    /*while (!nodes.empty()) {
-        cout << nodes.top()->getData() << endl;
-        cout << nodes.top()->getLeft()->getData() << endl;
-        cout << nodes.top()->getRight()->getData() << endl;
-        cout << endl;l
-        nodes.pop();
-    }
-    */
-    cout << operations.size();
 }
 
 void expressionTree::printTree(const string& prefix, node* node, bool isLeft)
@@ -162,8 +153,8 @@ void expressionTree::printTree(const string& prefix, node* node, bool isLeft)
         cout << prefix;
         cout << (isLeft ? char(195) : char(192)) << char(196) << char(196);
         cout << node->getData() << endl;
-        expressionTree::printTree(prefix + (isLeft ? "|   " : "    "), node->getLeft(), true);
-        expressionTree::printTree(prefix + (isLeft ? "|   " : "    "), node->getRight(), false);
+        printTree(prefix + (isLeft ? "|   " : "    "), node->getLeft(), true);
+        printTree(prefix + (isLeft ? "|   " : "    "), node->getRight(), false);
     }
 }
 

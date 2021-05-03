@@ -1,10 +1,11 @@
 ﻿#pragma once
 #include <string>
+#include <vector>
 
 class node
 {
 	std::string data;
-	node *left, *right;
+	std::vector<node*>nodes;
 public:
 	node();
 	node(std::string);

@@ -1,10 +1,10 @@
-﻿#include <iostream>
-#include <unordered_map>
-#include <string>
-#include "fileReader.h"
+﻿#include "fileReader.h"
 #include "view.h"
 #include "tokenizer.h"
 #include "expressionTree.h"
+#include <iostream>
+#include <unordered_map>
+#include <string>
 
 using namespace std;
 

@@ -1,5 +1,5 @@
 ﻿#include "fileReader.h"
-#include <iostream>
+#include "view.h"
 #include <unordered_map>
 #include <fstream>
 #include <string>
@@ -10,7 +10,7 @@ void fileReader::readVariablesAndExpression(string fileName, unordered_map<strin
 {
 	ifstream inFile(fileName);
 	if(!inFile)
-		cout<<"Can't open the file!\n";
+		view::unsuccessfulOpening();
 	else
 	{
 		vector<string> stringsFromFile;
@@ -23,10 +23,8 @@ void fileReader::readVariablesAndExpression(string fileName, unordered_map<strin
 		{
 			int indexOfName=stringsFromFile[i].find('=')-1;
 			string variableName=stringsFromFile[i].substr(0, indexOfName);
-			//cout<<variableName<<'@'<<endl;
 			string numberOfVariable=stringsFromFile[i].substr(indexOfName+3);
 			numberOfVariable.pop_back();
-			//cout<<numberOfVariable<<endl;
 			variables.insert(make_pair(variableName, numberOfVariable));
 		}
 		expression=stringsFromFile.back();

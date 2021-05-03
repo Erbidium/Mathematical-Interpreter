@@ -3,18 +3,23 @@
 
 using namespace std;
 
-node::node():
-left(nullptr), right(nullptr)
-{}
+node::node()
+{
+	nodes.resize(2, nullptr);
+}
 
 node::node(string data):
-left(nullptr), right(nullptr), data(data)
-{}
+data(data)
+{
+	nodes.resize(2, nullptr);
+}
 
 node::~node()
 {
-	delete left;
-	delete right;
+	for(int i=0;i<nodes.size();i++)
+	{
+		delete nodes[i];
+	}
 }
 
 string node::getData()
@@ -27,17 +32,17 @@ void node::setData(string newData)
 }
 node* node::getLeft()
 {
-	return left;
+	return nodes[0];
 }
 node* node::getRight()
 {
-	return right;
+	return nodes[1];
 }
 void node::setRight(node* newRight)
 {
-	right=newRight;
+	nodes[1]=newRight;
 }
 void node::setLeft(node* newLeft)
 {
-	left=newLeft;
+	nodes[0]=newLeft;
 }
