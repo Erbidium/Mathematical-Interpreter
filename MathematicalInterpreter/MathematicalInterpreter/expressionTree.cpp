@@ -1,11 +1,44 @@
 #include "expressionTree.h"
 #include "node.h"
 #include <iostream>
+#include <cmath>
 #include <stack>
 #include <ostream>
 #include "operation.h"
 
 using namespace std;
+
+double expressionTree::calculateNode(node* current)
+{
+	if(isdigit(current->getData()[0]))
+	{
+		return stod(current->getData());
+	}
+    else if(isalpha(current->getData()[0]))
+	{
+		return stod(variables.at(current->getData()));
+	}
+	else if((current->getData()=="-")&&(current->getLeft()==nullptr))
+        return -1*calculateNode(current->getRight());
+    else
+    {
+	    if(current->getData()=="-")
+            return calculateNode(current->getRight())-calculateNode(current->getLeft());
+        else if(current->getData()=="*")
+            return calculateNode(current->getRight())*calculateNode(current->getLeft());
+    	else if(current->getData()=="/")
+            return calculateNode(current->getRight())/calculateNode(current->getLeft());
+    	else if(current->getData()=="+")
+            return calculateNode(current->getRight())+calculateNode(current->getLeft());
+    	else if(current->getData()=="^")
+            return pow(calculateNode(current->getRight()), calculateNode(current->getLeft()));
+    }
+}
+
+void expressionTree::setVariables(const unordered_map<string, string> &variables)
+{
+	this->variables=variables;
+}
 
 expressionTree::expressionTree():
 root(nullptr)
@@ -132,4 +165,9 @@ void expressionTree::printTree(const string& prefix, node* node, bool isLeft)
         expressionTree::printTree(prefix + (isLeft ? "|   " : "    "), node->getLeft(), true);
         expressionTree::printTree(prefix + (isLeft ? "|   " : "    "), node->getRight(), false);
     }
+}
+
+double expressionTree::calculate()
+{
+	return calculateNode(root);
 }

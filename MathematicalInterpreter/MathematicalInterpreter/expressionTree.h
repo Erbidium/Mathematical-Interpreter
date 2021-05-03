@@ -1,15 +1,20 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <unordered_map>
 #include "node.h"
-using namespace std;
+
 class expressionTree
 {
+	double calculateNode(node *);
+	std::unordered_map<std::string, std::string> variables;
 public:
+	void setVariables(const std::unordered_map<std::string, std::string>& variables);
 	node* root;
 	expressionTree();
 	~expressionTree();
 	void buildTree(std::vector<std::string> tokensFromExpression);
-	void printTree(const string& prefix, node* node, bool isLeft);
+	void printTree(const std::string& prefix, node* node, bool isLeft);
+	double calculate();
 };
 

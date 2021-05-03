@@ -16,6 +16,8 @@ int main()
 	fileReader::readVariablesAndExpression(fileName, variables, expression);
 	vector<string> tokensFromExpression=tokenizer::splitExpressionIntoTokens(expression);
 	expressionTree currentTree;
+	currentTree.setVariables(variables);
 	currentTree.buildTree(tokensFromExpression);
 	currentTree.printTree("", currentTree.root, false);
+	cout<<"Result: "<<currentTree.calculate()<<endl;
 }
