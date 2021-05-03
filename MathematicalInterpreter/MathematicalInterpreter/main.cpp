@@ -17,4 +17,5 @@ int main()
 	vector<string> tokensFromExpression=tokenizer::splitExpressionIntoTokens(expression);
 	expressionTree currentTree;
 	currentTree.buildTree(tokensFromExpression);
+	currentTree.printTree("", currentTree.root, false);
 }

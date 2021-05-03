@@ -150,6 +150,7 @@
     <ClInclude Include="expressionTree.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="fileReader.h" />
+    <ClInclude Include="operation.h" />
     <ClInclude Include="tokenizer.h" />
     <ClInclude Include="view.h" />
   </ItemGroup>

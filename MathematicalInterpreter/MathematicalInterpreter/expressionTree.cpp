@@ -1,6 +1,9 @@
 #include "expressionTree.h"
+#include "node.h"
 #include <iostream>
+#include <stack>
 #include <ostream>
+#include "operation.h"
 
 using namespace std;
 
@@ -15,8 +18,94 @@ expressionTree::~expressionTree()
 
 void expressionTree::buildTree(std::vector<std::string> tokensFromExpression)
 {
+    stack<node*> nodes;
+    stack<char> operations;
 	for(int i=0;i<tokensFromExpression.size();i++)
 	{
-		cout<<tokensFromExpression[i]<< endl;
+        string currentToken = tokensFromExpression[i];
+        if (currentToken.length() >= 1 && (isdigit(currentToken[0])||isalpha(currentToken[0]))) {
+            node* tempNode = new node(currentToken);
+            nodes.push(tempNode);
+        }
+        else {
+            if (operations.empty()) {
+                operations.push(currentToken[0]);
+            }
+            else {
+                operation currentOperation(currentToken[0]);
+                operation previousOperation(operations.top());
+                if (((previousOperation.name == '(' && currentOperation.name == ')'))) {
+                    node* tempNode = new node(currentToken);
+                    nodes.push(tempNode);
+                }
+                else if ((currentOperation.name == '(') || (previousOperation.name == '('))
+                {
+                    operations.push(currentOperation.name);
+                }
+                else if (currentOperation.name == ')')
+                {
+                    while (previousOperation.name != '(')
+                    {
+
+                        node* operationsTop = new node(string(1, previousOperation.name));
+                        operationsTop->setLeft(nodes.top());
+                        nodes.pop();
+                        operationsTop->setRight(nodes.top());
+                        nodes.pop();
+                        operations.pop();
+                        nodes.push(operationsTop);
+                        if (!operations.empty()) previousOperation = operations.top();
+                    }
+                    operations.pop();
+                }
+                else
+                {
+                    while (currentOperation.priority <= previousOperation.priority && !(operations.empty()) && ((previousOperation.name != '(')))
+                    {
+
+                        node* operationsTop = new node(string(1, previousOperation.name));
+                        operationsTop->setLeft(nodes.top());
+                        nodes.pop();
+                        operationsTop->setRight(nodes.top());
+                        nodes.pop();
+                        operations.pop();
+                        nodes.push(operationsTop);
+                        if (!operations.empty()) previousOperation = operations.top();
+                    }
+                    operations.push(currentToken[0]);
+                }
+            }
+        }
 	}
+    while (!operations.empty()) {
+        node* operationsTop = new node(string(1, operations.top()));
+        operationsTop->setLeft(nodes.top());
+        nodes.pop();
+        operationsTop->setRight(nodes.top());
+        nodes.pop();
+        operations.pop();
+        nodes.push(operationsTop);
+        cout << "check" << endl;
+    }
+    root = nodes.top();
+    /*while (!nodes.empty()) {
+        cout << nodes.top()->getData() << endl;
+        cout << nodes.top()->getLeft()->getData() << endl;
+        cout << nodes.top()->getRight()->getData() << endl;
+        cout << endl;l
+        nodes.pop();
+    }
+    */
+    cout << operations.size();
+}
+
+void expressionTree::printTree(const string& prefix, node* node, bool isLeft)
+{
+    if (node != nullptr) {
+        cout << prefix;
+        cout << (isLeft ? char(195) : char(192)) << char(196) << char(196);
+        cout << node->getData() << endl;
+        expressionTree::printTree(prefix + (isLeft ? "|   " : "    "), node->getLeft(), true);
+        expressionTree::printTree(prefix + (isLeft ? "|   " : "    "), node->getRight(), false);
+    }
 }
