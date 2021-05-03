@@ -10,14 +10,11 @@ using namespace std;
 
 int main()
 {
-	unordered_map<string, string> variables;
-	string fileName, expression;
+	string fileName;
     fileName=view::enterNameOfFile();
-	fileReader::readVariablesAndExpression(fileName, variables, expression);
-	vector<string> tokensFromExpression=tokenizer::splitExpressionIntoTokens(expression);
+	vector<string> stringsFromFile = fileReader::readVariablesAndExpression(fileName);
 	expressionTree currentTree;
-	currentTree.setVariables(variables);
-	currentTree.buildTree(tokensFromExpression);
+	currentTree.buildExpressionTree(tokensFromExpression);
 	currentTree.printTree("", currentTree.root, false);
 	cout<<"Result: "<<currentTree.calculate()<<endl;
 }

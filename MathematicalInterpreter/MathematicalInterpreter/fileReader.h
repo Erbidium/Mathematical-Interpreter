@@ -1,10 +1,11 @@
 ﻿#pragma once
 #include <string>
+#include <vector>
 #include <unordered_map>
 
-
+using namespace std;
 class fileReader
 {
 public:
-	static void readVariablesAndExpression(std::string fileName, std::unordered_map<std::string, std::string>& variables, std::string &expression);
+	static vector<string> readVariablesAndExpression(std::string fileName);
 };

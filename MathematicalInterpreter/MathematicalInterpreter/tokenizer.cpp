@@ -29,3 +29,11 @@ vector<string> tokenizer::splitExpressionIntoTokens(string expression)
 	}
 	return tokens;
 }
+
+std::string tokenizer::deleteWhiteSpaces(std::string str)
+{
+	while (str[0] == ' ') {
+		str.erase(0, 1);
+	}
+	return str;
+}
