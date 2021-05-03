@@ -13,7 +13,7 @@ public:
 	node* root;
 	expressionTree();
 	~expressionTree();
-	void buildExpressionTree(std::vector<std::string> tokensFromExpression);
+	node* buildExpressionTree(std::vector<std::string> tokensFromExpression);
 	void buildTree(std::vector<std::string> stringsFromFile);
 	void printTree(const std::string& prefix, node* node, bool isLeft);
 	double calculate();

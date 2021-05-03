@@ -5,6 +5,7 @@
 #include <stack>
 #include <ostream>
 #include "operation.h"
+#include "tokenizer.h"
 
 using namespace std;
 
@@ -49,7 +50,7 @@ expressionTree::~expressionTree()
 	delete root;
 }
 
-void expressionTree::buildTree(std::vector<std::string> tokensFromExpression)
+node* expressionTree::buildExpressionTree(std::vector<std::string> tokensFromExpression)
 {
     stack<node*> nodes;
     stack<char> operations;
@@ -144,7 +145,27 @@ void expressionTree::buildTree(std::vector<std::string> tokensFromExpression)
         nodes.push(operationsTop);
         operations.pop();
     }
-    root = nodes.top();
+    return nodes.top();
+}
+
+void expressionTree::buildTree(std::vector<string> stringsFromFile)
+{
+    node* stList = new node("St. list");
+    int counter = 0;
+    root = stList;
+    for (int i = 0; i < stringsFromFile.size(); i++) {
+        string str = tokenizer::deleteWhiteSpaces(stringsFromFile[i]);
+        if (str.find('=') != (-1)) {
+            node* statement = new node("=");
+            int equalPosition = str.find('=');
+            string variableName = str.substr(0, equalPosition);
+            string value = str.substr(equalPosition + 1);
+            value = tokenizer::deleteWhiteSpaces(value);
+            statement->setLeft(new node (tokenizer::deleteWhiteSpaces(variableName)));
+            statement->setRight(buildExpressionTree(tokenizer::splitExpressionIntoTokens(value)));
+            stList->setChildren(statement, counter++);
+        }
+    }
 }
 
 void expressionTree::printTree(const string& prefix, node* node, bool isLeft)
