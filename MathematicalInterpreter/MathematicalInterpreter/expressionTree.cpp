@@ -23,6 +23,8 @@ void expressionTree::buildTree(std::vector<std::string> tokensFromExpression)
 	for(int i=0;i<tokensFromExpression.size();i++)
 	{
         string currentToken = tokensFromExpression[i];
+        if (i == 0 && currentToken == "-")operations.push('m');
+        else
         if (currentToken.length() >= 1 && (isdigit(currentToken[0])||isalpha(currentToken[0]))) {
             node* tempNode = new node(currentToken);
             nodes.push(tempNode);
@@ -34,6 +36,8 @@ void expressionTree::buildTree(std::vector<std::string> tokensFromExpression)
             else {
                 operation currentOperation(currentToken[0]);
                 operation previousOperation(operations.top());
+                if(currentOperation.name ==  '-' && tokensFromExpression[i-1] == "(")operations.push('m');
+                else
                 if (((previousOperation.name == '(' && currentOperation.name == ')'))) {
                     node* tempNode = new node(currentToken);
                     nodes.push(tempNode);
@@ -46,14 +50,21 @@ void expressionTree::buildTree(std::vector<std::string> tokensFromExpression)
                 {
                     while (previousOperation.name != '(')
                     {
-
-                        node* operationsTop = new node(string(1, previousOperation.name));
-                        operationsTop->setLeft(nodes.top());
-                        nodes.pop();
-                        operationsTop->setRight(nodes.top());
-                        nodes.pop();
-                        operations.pop();
+                        node* operationsTop;
+                        if (previousOperation.name == 'm') {
+                            operationsTop = new node(string(1, '-'));
+                            operationsTop->setRight(nodes.top());
+                            nodes.pop();
+                        }
+                        else {
+                            operationsTop = new node(string(1, previousOperation.name));
+                            operationsTop->setLeft(nodes.top());
+                            nodes.pop();
+                            operationsTop->setRight(nodes.top());
+                            nodes.pop();
+                        }
                         nodes.push(operationsTop);
+                        operations.pop();
                         if (!operations.empty()) previousOperation = operations.top();
                     }
                     operations.pop();
@@ -62,14 +73,21 @@ void expressionTree::buildTree(std::vector<std::string> tokensFromExpression)
                 {
                     while (currentOperation.priority <= previousOperation.priority && !(operations.empty()) && ((previousOperation.name != '(')))
                     {
-
-                        node* operationsTop = new node(string(1, previousOperation.name));
-                        operationsTop->setLeft(nodes.top());
-                        nodes.pop();
-                        operationsTop->setRight(nodes.top());
-                        nodes.pop();
-                        operations.pop();
+                        node* operationsTop;
+                        if (previousOperation.name == 'm') {
+                            operationsTop = new node(string(1, '-'));
+                            operationsTop->setRight(nodes.top());
+                            nodes.pop();
+                        }
+                        else {
+                            operationsTop = new node(string(1, previousOperation.name));
+                            operationsTop->setLeft(nodes.top());
+                            nodes.pop();
+                            operationsTop->setRight(nodes.top());
+                            nodes.pop();
+                        }
                         nodes.push(operationsTop);
+                        operations.pop();
                         if (!operations.empty()) previousOperation = operations.top();
                     }
                     operations.push(currentToken[0]);
@@ -78,14 +96,21 @@ void expressionTree::buildTree(std::vector<std::string> tokensFromExpression)
         }
 	}
     while (!operations.empty()) {
-        node* operationsTop = new node(string(1, operations.top()));
-        operationsTop->setLeft(nodes.top());
-        nodes.pop();
-        operationsTop->setRight(nodes.top());
-        nodes.pop();
-        operations.pop();
+        node* operationsTop;
+        if (operations.top() == 'm') {
+            operationsTop = new node(string(1, '-'));
+            operationsTop->setRight(nodes.top());
+            nodes.pop();
+        }
+        else {
+            operationsTop = new node(string(1, operations.top()));
+            operationsTop->setLeft(nodes.top());
+            nodes.pop();
+            operationsTop->setRight(nodes.top());
+            nodes.pop();
+        }
         nodes.push(operationsTop);
-        cout << "check" << endl;
+        operations.pop();
     }
     root = nodes.top();
     /*while (!nodes.empty()) {

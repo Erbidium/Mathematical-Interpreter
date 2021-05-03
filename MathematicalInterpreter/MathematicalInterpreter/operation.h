@@ -5,7 +5,7 @@ struct operation {
     char name;
     operation(const char x) {
         name = x;
-        if ((x == '-') || (x == '+'))
+        if ((x == '-') || (x == '+') || (x=='m'))
         {
             priority = 1;
         }
