@@ -14,7 +14,7 @@ public:
 	expressionTree();
 	~expressionTree();
 	node* buildExpressionTree(std::vector<std::string> tokensFromExpression);
-	void buildTree(std::vector<std::string> stringsFromFile);
+	node* buildTree(std::vector<std::string> stringsFromFile);
 	void printTree(const std::string& prefix, node* node, bool isLeft);
 	double calculate();
 };

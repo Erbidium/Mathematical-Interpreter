@@ -148,11 +148,10 @@ node* expressionTree::buildExpressionTree(std::vector<std::string> tokensFromExp
     return nodes.top();
 }
 
-void expressionTree::buildTree(std::vector<string> stringsFromFile)
+node* expressionTree::buildTree(std::vector<string> stringsFromFile)
 {
     node* stList = new node("St. list");
     int counter = 0;
-    root = stList;
     for (int i = 0; i < stringsFromFile.size(); i++) {
         string str = tokenizer::deleteWhiteSpaces(stringsFromFile[i]);
         cout << str << endl;
@@ -175,12 +174,27 @@ void expressionTree::buildTree(std::vector<string> stringsFromFile)
                 statement->setLeft(buildExpressionTree(tokenizer::splitExpressionIntoTokens(condition)));
                 cout << "Check" << endl;
                 stList->setChildren(statement, counter++);
+                vector<string> substrings;
+                i++;
+                while (tokenizer::deleteWhiteSpaces(stringsFromFile[++i])[0] != '}') {
+                    substrings.push_back(tokenizer::deleteWhiteSpaces(stringsFromFile[i]));     
+                }
+                statement->setRight(buildTree(substrings));
+                if ((i + 1) < stringsFromFile.size() && tokenizer::deleteWhiteSpaces(stringsFromFile[i + 1]).find("else") != -1) {
+                    vector<string> substrings2;
+                    i+= 2;
+                    while (tokenizer::deleteWhiteSpaces(stringsFromFile[++i])[0] != '}') {
+                        substrings2.push_back(tokenizer::deleteWhiteSpaces(stringsFromFile[i]));
+                    }
+                    statement->setChildren(buildTree(substrings2), 2);
+                }
             }
             else {
                 stList->setChildren(buildExpressionTree(tokenizer::splitExpressionIntoTokens(str)), counter++);
             }
         }
     }
+    return stList;
 }
 
 void expressionTree::printTree(const string& prefix, node* node, bool isLeft)

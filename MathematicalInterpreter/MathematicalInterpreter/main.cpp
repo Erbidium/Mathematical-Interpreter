@@ -14,7 +14,7 @@ int main()
     fileName=view::enterNameOfFile();
 	vector<string> stringsFromFile = fileReader::readVariablesAndExpression(fileName);
 	expressionTree currentTree;
-	currentTree.buildTree(stringsFromFile);
+	currentTree.root = currentTree.buildTree(stringsFromFile);
 	currentTree.printTree("", currentTree.root, false);
 	//cout<<"Result: "<<currentTree.calculate()<<endl;
 }
