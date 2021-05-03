@@ -174,8 +174,10 @@ void expressionTree::printTree(const string& prefix, node* node, bool isLeft)
         cout << prefix;
         cout << (isLeft ? char(195) : char(192)) << char(196) << char(196);
         cout << node->getData() << endl;
-        printTree(prefix + (isLeft ? "|   " : "    "), node->getLeft(), true);
-        printTree(prefix + (isLeft ? "|   " : "    "), node->getRight(), false);
+        for (int i = 0; i < node->getNumberOfChildrens() - 1;i++) {
+            printTree(prefix + (isLeft ? "|   " : "    "), node->getChildren(i), true);
+        }
+        printTree(prefix + (isLeft ? "|   " : "    "), node->getChildren(node->getNumberOfChildrens() - 1), false);
     }
 }
 
