@@ -16,9 +16,9 @@ vector<string> fileReader::readVariablesAndExpression(string fileName)
 	else
 	{
 		string tempStr;
-		while(getline(inFile, tempStr))
+		while (getline(inFile, tempStr))
 		{
-			stringsFromFile.push_back(tempStr);
+			if (tempStr.length() > 0) stringsFromFile.push_back(tempStr);
 		}
 	}
 	inFile.close();
