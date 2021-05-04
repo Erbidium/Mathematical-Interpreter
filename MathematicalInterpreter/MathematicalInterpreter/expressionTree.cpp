@@ -280,3 +280,18 @@ void expressionTree::calculateTree(std::vector<std::string> &calculatedVariables
 		}
 	}
 }
+
+std::unordered_map<std::string, double> expressionTree::getVariables()
+{
+    return variables;
+}
+
+node* expressionTree::getRoot()
+{
+    return root;
+}
+
+void expressionTree::setRoot(node* root)
+{
+    this->root = root;
+}
