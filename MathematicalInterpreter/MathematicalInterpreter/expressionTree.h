@@ -6,11 +6,11 @@
 
 class expressionTree
 {
-	double calculateNode(node *);
-public:
 	std::unordered_map<std::string, double> variables;
-	void setVariables(const std::unordered_map<std::string, double>& variables);
+	double calculateNode(node *);
 	node* root;
+public:
+	void setVariables(const std::unordered_map<std::string, double>& variables);
 	expressionTree();
 	~expressionTree();
 	node* buildExpressionTree(std::vector<std::string> tokensFromExpression);
@@ -18,5 +18,8 @@ public:
 	void printTree(const std::string& prefix, node* node, bool isLeft);
 	double calculateExpression();
 	void calculateTree(std::vector<std::string> &calculatedVariablesAndExpressions, node * current, int &numberOfExpression);
+	std::unordered_map<std::string, double> getVariables();
+	node* getRoot();
+	void setRoot(node* root);
 };
 

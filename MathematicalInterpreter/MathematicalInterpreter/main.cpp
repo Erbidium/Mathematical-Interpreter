@@ -14,14 +14,13 @@ int main()
     fileName=view::enterNameOfFile();
 	vector<string> stringsFromFile = fileReader::readVariablesAndExpression(fileName);
 	expressionTree currentTree;
-	currentTree.root = currentTree.buildTree(stringsFromFile);
-	currentTree.printTree("", currentTree.root, false);
-	//cout<<"Result: "<<currentTree.calculateExpression()<<endl;
+	currentTree.setRoot(currentTree.buildTree(stringsFromFile));
+	currentTree.printTree("", currentTree.getRoot(), false);
 	vector<string> calculatedVariablesAndExpressions;
 	int numberOfExpression=1;
-	currentTree.calculateTree(calculatedVariablesAndExpressions, currentTree.root, numberOfExpression);
+	currentTree.calculateTree(calculatedVariablesAndExpressions, currentTree.getRoot(), numberOfExpression);
 	for(int i=0;i<calculatedVariablesAndExpressions.size();i++)
 	{
-		cout<<calculatedVariablesAndExpressions[i]<<" = "<<currentTree.variables.at(calculatedVariablesAndExpressions[i])<<endl;
+		cout<<calculatedVariablesAndExpressions[i]<<" = "<<currentTree.getVariables().at(calculatedVariablesAndExpressions[i])<<endl;
 	}
 }
