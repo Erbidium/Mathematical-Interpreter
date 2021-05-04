@@ -154,7 +154,6 @@ node* expressionTree::buildTree(std::vector<string> stringsFromFile)
     int counter = 0;
     for (int i = 0; i < stringsFromFile.size(); i++) {
         string str = tokenizer::deleteWhiteSpaces(stringsFromFile[i]);
-        cout << str << endl;
         if (str.find('=') != (-1)) {
             node* statement = new node("=");
             int equalPosition = str.find('=');
@@ -170,9 +169,7 @@ node* expressionTree::buildTree(std::vector<string> stringsFromFile)
                 string condition = str.substr(str.find('(')+1);
                 condition[condition.length() - 1] = ';';
                 node* statement = new node("if");
-                //cout << "cond " << condition << endl;
                 statement->setLeft(buildExpressionTree(tokenizer::splitExpressionIntoTokens(condition)));
-                //cout << "Check" << endl;
                 stList->setChildren(statement, counter++);
                 vector<string> substrings;
                 i++;
@@ -181,8 +178,6 @@ node* expressionTree::buildTree(std::vector<string> stringsFromFile)
                 while(bracketsCounter!=0)
                 {
                 	i++;
-                	
-                	cout<<i<<endl;
                 	if(tokenizer::deleteWhiteSpaces(stringsFromFile[i])[0] == '}')
 					    bracketsCounter--;
                     else if(tokenizer::deleteWhiteSpaces(stringsFromFile[i])[0] == '{')
@@ -190,28 +185,24 @@ node* expressionTree::buildTree(std::vector<string> stringsFromFile)
                 	if(bracketsCounter!=0)
                 		substrings.push_back(tokenizer::deleteWhiteSpaces(stringsFromFile[i]));
                 }
-            	//i++;
-            	cout<<"i: "<<i<<endl;
                 statement->setRight(buildTree(substrings));
                 if ((i + 1) < stringsFromFile.size() && tokenizer::deleteWhiteSpaces(stringsFromFile[i + 1]).find("else") != -1) {
                     vector<string> substrings2;
                     i+=2;
                 	int bracketsCounter2=1;
-                	
+                	cout<<"here"<<endl;
                 	while(bracketsCounter2!=0)
                 	{
                 		i++;
-                		cout<<i<<endl;
                 		if(tokenizer::deleteWhiteSpaces(stringsFromFile[i])[0] == '}')
                             bracketsCounter2--;
                         else if(tokenizer::deleteWhiteSpaces(stringsFromFile[i])[0] == '{')
                             bracketsCounter2++;
-                		if(bracketsCounter!=0)
+                		if(bracketsCounter2!=0){
                 			substrings2.push_back(tokenizer::deleteWhiteSpaces(stringsFromFile[i]));
+                        }
                 	}
-                	//cout<<endl;
                     statement->setChildren(buildTree(substrings2), 2);
-                	//i++;
                 }
             }
             else {
