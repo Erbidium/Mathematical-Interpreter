@@ -32,8 +32,10 @@ vector<string> tokenizer::splitExpressionIntoTokens(string expression)
 
 std::string tokenizer::deleteWhiteSpaces(std::string str)
 {
-	while (str[0] == ' ' || str[0] == '\t') {
-		str.erase(0, 1);
+	string newStr;
+	for(int i=0;i<str.size();i++)
+	{
+		if((str[i]!=' ')&&(str[i]!='\t')) newStr+=str[i];
 	}
-	return str;
+	return newStr;
 }

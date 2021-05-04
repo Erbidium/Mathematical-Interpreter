@@ -17,7 +17,7 @@ double expressionTree::calculateNode(node* current)
 	}
     else if(isalpha(current->getData()[0]))
 	{
-		return stod(variables.at(current->getData()));
+		return variables.at(current->getData());
 	}
 	else if((current->getData()=="-")&&(current->getLeft()==nullptr))
         return -1*calculateNode(current->getRight());
@@ -36,7 +36,7 @@ double expressionTree::calculateNode(node* current)
     }
 }
 
-void expressionTree::setVariables(const unordered_map<string, string> &variables)
+void expressionTree::setVariables(const unordered_map<string, double> &variables)
 {
 	this->variables=variables;
 }
@@ -215,7 +215,47 @@ void expressionTree::printTree(const string& prefix, node* node, bool isLeft)
     }
 }
 
-double expressionTree::calculate()
+double expressionTree::calculateExpression()
 {
 	return calculateNode(root);
+}
+
+void expressionTree::calculateTree(std::vector<std::string> &calculatedVariablesAndExpressions, node * current, int &numberOfExpression)
+{
+	if((current!=nullptr)&&(current->getData()=="St. list"))
+	{
+		for(int i=0;i<current->getNumberOfChildrens();i++)
+		{
+			node * children=current->getChildren(i);
+			if(children!=nullptr)
+			{
+				if(children->getData()=="=")
+				{
+					string variableName=children->getLeft()->getData();
+					double variableValue=calculateNode(children->getRight());
+					variables.insert(make_pair(variableName, variableValue));
+					calculatedVariablesAndExpressions.push_back(variableName);
+				}
+                else if(children->getData()=="if")
+                {
+	                double condition=calculateNode(children->getLeft());
+                	if(condition!=0)
+                	{
+                		calculateTree(calculatedVariablesAndExpressions, children->getRight(), numberOfExpression);
+                	}
+                    else
+                    {
+	                    calculateTree(calculatedVariablesAndExpressions, children->getChildren(2), numberOfExpression);
+                    }
+                }
+                else
+                {
+	                double expressionValue=calculateNode(children);
+                	calculatedVariablesAndExpressions.push_back("expression "+to_string(numberOfExpression));
+                	variables.insert(make_pair("expression "+to_string(numberOfExpression), expressionValue));
+                	numberOfExpression++;
+                }
+			}
+		}
+	}
 }

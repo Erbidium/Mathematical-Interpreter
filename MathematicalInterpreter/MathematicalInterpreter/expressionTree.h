@@ -7,15 +7,16 @@
 class expressionTree
 {
 	double calculateNode(node *);
-	std::unordered_map<std::string, std::string> variables;
 public:
-	void setVariables(const std::unordered_map<std::string, std::string>& variables);
+	std::unordered_map<std::string, double> variables;
+	void setVariables(const std::unordered_map<std::string, double>& variables);
 	node* root;
 	expressionTree();
 	~expressionTree();
 	node* buildExpressionTree(std::vector<std::string> tokensFromExpression);
 	node* buildTree(std::vector<std::string> stringsFromFile);
 	void printTree(const std::string& prefix, node* node, bool isLeft);
-	double calculate();
+	double calculateExpression();
+	void calculateTree(std::vector<std::string> &calculatedVariablesAndExpressions, node * current, int &numberOfExpression);
 };
 
