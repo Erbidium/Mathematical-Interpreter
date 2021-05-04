@@ -16,7 +16,6 @@ int main()
 	expressionTree currentTree;
 	currentTree.root = currentTree.buildTree(stringsFromFile);
 	currentTree.printTree("", currentTree.root, false);
-	//cout<<"Result: "<<currentTree.calculateExpression()<<endl;
 	vector<string> calculatedVariablesAndExpressions;
 	int numberOfExpression=1;
 	currentTree.calculateTree(calculatedVariablesAndExpressions, currentTree.root, numberOfExpression);

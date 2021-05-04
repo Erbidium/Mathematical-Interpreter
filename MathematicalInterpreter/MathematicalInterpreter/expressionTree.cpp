@@ -150,7 +150,7 @@ node* expressionTree::buildExpressionTree(std::vector<std::string> tokensFromExp
 
 node* expressionTree::buildTree(std::vector<string> stringsFromFile)
 {
-    node* stList = new node("St. list");
+    node* statementsList = new node("St. list");
     int counter = 0;
     for (int i = 0; i < stringsFromFile.size(); i++) {
         string str = tokenizer::deleteWhiteSpaces(stringsFromFile[i]);
@@ -162,7 +162,7 @@ node* expressionTree::buildTree(std::vector<string> stringsFromFile)
             value = tokenizer::deleteWhiteSpaces(value);
             statement->setLeft(new node (tokenizer::deleteWhiteSpaces(variableName)));
             statement->setRight(buildExpressionTree(tokenizer::splitExpressionIntoTokens(value)));
-            stList->setChildren(statement, counter++);
+            statementsList->setChildren(statement, counter++);
         }
         else {
             if (str[0] == 'i' && str[1] == 'f'){
@@ -170,47 +170,46 @@ node* expressionTree::buildTree(std::vector<string> stringsFromFile)
                 condition[condition.length() - 1] = ';';
                 node* statement = new node("if");
                 statement->setLeft(buildExpressionTree(tokenizer::splitExpressionIntoTokens(condition)));
-                stList->setChildren(statement, counter++);
-                vector<string> substrings;
+                statementsList->setChildren(statement, counter++);
+                vector<string> substringForIf;
                 i++;
-            	int bracketsCounter=1;
+            	int bracketsInIfCounter=1;
                 	
-                while(bracketsCounter!=0)
+                while(bracketsInIfCounter!=0)
                 {
                 	i++;
                 	if(tokenizer::deleteWhiteSpaces(stringsFromFile[i])[0] == '}')
-					    bracketsCounter--;
+					    bracketsInIfCounter--;
                     else if(tokenizer::deleteWhiteSpaces(stringsFromFile[i])[0] == '{')
-                        bracketsCounter++;
-                	if(bracketsCounter!=0)
-                		substrings.push_back(tokenizer::deleteWhiteSpaces(stringsFromFile[i]));
+                        bracketsInIfCounter++;
+                	if(bracketsInIfCounter!=0)
+                		substringForIf.push_back(tokenizer::deleteWhiteSpaces(stringsFromFile[i]));
                 }
-                statement->setRight(buildTree(substrings));
+                statement->setRight(buildTree(substringForIf));
                 if ((i + 1) < stringsFromFile.size() && tokenizer::deleteWhiteSpaces(stringsFromFile[i + 1]).find("else") != -1) {
-                    vector<string> substrings2;
+                    vector<string> substringForElse;
                     i+=2;
-                	int bracketsCounter2=1;
-                	cout<<"here"<<endl;
-                	while(bracketsCounter2!=0)
+                	int bracketsInElseCounter=1;
+                	while(bracketsInElseCounter!=0)
                 	{
                 		i++;
                 		if(tokenizer::deleteWhiteSpaces(stringsFromFile[i])[0] == '}')
-                            bracketsCounter2--;
+                            bracketsInElseCounter--;
                         else if(tokenizer::deleteWhiteSpaces(stringsFromFile[i])[0] == '{')
-                            bracketsCounter2++;
-                		if(bracketsCounter2!=0){
-                			substrings2.push_back(tokenizer::deleteWhiteSpaces(stringsFromFile[i]));
+                            bracketsInElseCounter++;
+                		if(bracketsInElseCounter!=0){
+                			substringForElse.push_back(tokenizer::deleteWhiteSpaces(stringsFromFile[i]));
                         }
                 	}
-                    statement->setChildren(buildTree(substrings2), 2);
+                    statement->setChildren(buildTree(substringForElse), 2);
                 }
             }
             else {
-                stList->setChildren(buildExpressionTree(tokenizer::splitExpressionIntoTokens(str)), counter++);
+                statementsList->setChildren(buildExpressionTree(tokenizer::splitExpressionIntoTokens(str)), counter++);
             }
         }
     }
-    return stList;
+    return statementsList;
 }
 
 void expressionTree::printTree(const string& prefix, node* node, bool isLeft)

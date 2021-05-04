@@ -20,7 +20,6 @@ vector<string> fileReader::readVariablesAndExpression(string fileName)
 		{
 			stringsFromFile.push_back(tempStr);
 		}
-		//cout<<"check"<<endl;
 	}
 	inFile.close();
 	return stringsFromFile;
