@@ -266,7 +266,9 @@ void expressionTree::calculateTree(std::vector<std::string> &calculatedVariables
                 	}
                     else
                     {
-	                    calculateTree(calculatedVariablesAndExpressions, children->getChildren(2), numberOfExpression);
+                        if (children->getNumberOfChildrens() > 2) {
+                            calculateTree(calculatedVariablesAndExpressions, children->getChildren(2), numberOfExpression);
+                        }
                     }
                 }
                 else
