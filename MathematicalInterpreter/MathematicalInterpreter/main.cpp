@@ -20,7 +20,6 @@ int main()
 	vector<string> calculatedVariablesAndExpressions;
 	int numberOfExpression=1;
 	currentTree.calculateTree(calculatedVariablesAndExpressions, currentTree.root, numberOfExpression);
-	//cout<<"check"<<endl;
 	for(int i=0;i<calculatedVariablesAndExpressions.size();i++)
 	{
 		cout<<calculatedVariablesAndExpressions[i]<<" = "<<currentTree.variables.at(calculatedVariablesAndExpressions[i])<<endl;

@@ -2,6 +2,7 @@
 #include "view.h"
 #include <unordered_map>
 #include <fstream>
+#include <iostream>
 #include <string>
 
 using namespace std;
@@ -19,6 +20,7 @@ vector<string> fileReader::readVariablesAndExpression(string fileName)
 		{
 			stringsFromFile.push_back(tempStr);
 		}
+		//cout<<"check"<<endl;
 	}
 	inFile.close();
 	return stringsFromFile;
