@@ -24,15 +24,15 @@ double expressionTree::calculateNode(node* current)
     else
     {
 	    if(current->getData()=="-")
-            return calculateNode(current->getRight())-calculateNode(current->getLeft());
+            return calculateNode(current->getLeft())-calculateNode(current->getRight());
         else if(current->getData()=="*")
-            return calculateNode(current->getRight())*calculateNode(current->getLeft());
+            return calculateNode(current->getLeft())*calculateNode(current->getRight());
     	else if(current->getData()=="/")
-            return calculateNode(current->getRight())/calculateNode(current->getLeft());
+            return calculateNode(current->getLeft())/calculateNode(current->getRight());
     	else if(current->getData()=="+")
-            return calculateNode(current->getRight())+calculateNode(current->getLeft());
+            return calculateNode(current->getLeft())+calculateNode(current->getRight());
     	else if(current->getData()=="^")
-            return pow(calculateNode(current->getRight()), calculateNode(current->getLeft()));
+            return pow(calculateNode(current->getLeft()), calculateNode(current->getRight()));
     }
 }
 
@@ -91,9 +91,9 @@ node* expressionTree::buildExpressionTree(std::vector<std::string> tokensFromExp
                         }
                         else {
                             operationsTop = new node(string(1, previousOperation.name));
-                            operationsTop->setLeft(nodes.top());
+                        	operationsTop->setRight(nodes.top());
                             nodes.pop();
-                            operationsTop->setRight(nodes.top());
+                            operationsTop->setLeft(nodes.top());
                             nodes.pop();
                         }
                         nodes.push(operationsTop);
@@ -114,9 +114,9 @@ node* expressionTree::buildExpressionTree(std::vector<std::string> tokensFromExp
                         }
                         else {
                             operationsTop = new node(string(1, previousOperation.name));
-                            operationsTop->setLeft(nodes.top());
+                        	operationsTop->setRight(nodes.top());
                             nodes.pop();
-                            operationsTop->setRight(nodes.top());
+                            operationsTop->setLeft(nodes.top());
                             nodes.pop();
                         }
                         nodes.push(operationsTop);
@@ -137,9 +137,9 @@ node* expressionTree::buildExpressionTree(std::vector<std::string> tokensFromExp
         }
         else {
             operationsTop = new node(string(1, operations.top()));
-            operationsTop->setLeft(nodes.top());
+        	operationsTop->setRight(nodes.top());
             nodes.pop();
-            operationsTop->setRight(nodes.top());
+            operationsTop->setLeft(nodes.top());
             nodes.pop();
         }
         nodes.push(operationsTop);
