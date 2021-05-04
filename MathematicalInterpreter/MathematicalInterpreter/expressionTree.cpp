@@ -258,7 +258,13 @@ void expressionTree::calculateTree(std::vector<std::string> &calculatedVariables
 				{
 					string variableName=children->getLeft()->getData();
 					double variableValue=calculateNode(children->getRight());
+					if(variables.contains(variableName)) variables.erase(variableName);
 					variables.insert(make_pair(variableName, variableValue));
+					auto itBegin=calculatedVariablesAndExpressions.begin();
+					auto itEnd=calculatedVariablesAndExpressions.end();
+					auto positionOfVarName=find(itBegin, itEnd, variableName);
+					if(positionOfVarName!=itEnd)
+                        calculatedVariablesAndExpressions.erase(positionOfVarName);
 					calculatedVariablesAndExpressions.push_back(variableName);
 				}
                 else if(children->getData()=="if")
