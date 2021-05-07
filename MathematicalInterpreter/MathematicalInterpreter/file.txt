@@ -1,2 +1,16 @@
+if(5)
+{
 getthereveryfastindeed=37.5*2.5;
+if(0)
+{
+}
+else
+{
+}
+}
+else
+{
+5+7;
+1.11+3.8;
+}
 

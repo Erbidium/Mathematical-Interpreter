@@ -1,11 +1,11 @@
 #include "expressionTree.h"
 #include "node.h"
+#include "operation.h"
+#include "tokenizer.h"
 #include <iostream>
 #include <cmath>
 #include <stack>
 #include <ostream>
-#include "operation.h"
-#include "tokenizer.h"
 
 using namespace std;
 
@@ -36,9 +36,20 @@ double expressionTree::calculateNode(node* current)
     }
 }
 
-void expressionTree::setVariables(const unordered_map<string, double> &variables)
+void expressionTree::build(const std::vector<std::string>& stringsFromFile)
 {
-	this->variables=variables;
+	root=(buildTree(stringsFromFile));
+}
+
+void expressionTree::print()
+{
+	printTree("", root, false);
+}
+
+void expressionTree::calculate(std::vector<std::string>& calculatedVariablesAndExpressions)
+{
+	int numberOfExpression=1;
+	calculateTree(calculatedVariablesAndExpressions, root, numberOfExpression);
 }
 
 expressionTree::expressionTree():
@@ -286,14 +297,4 @@ void expressionTree::calculateTree(std::vector<std::string> &calculatedVariables
 std::unordered_map<std::string, double> expressionTree::getVariables()
 {
     return variables;
-}
-
-node* expressionTree::getRoot()
-{
-    return root;
-}
-
-void expressionTree::setRoot(node* root)
-{
-    this->root = root;
 }
