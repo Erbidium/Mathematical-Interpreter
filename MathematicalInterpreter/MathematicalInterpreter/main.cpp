@@ -10,17 +10,13 @@ using namespace std;
 
 int main()
 {
-	string fileName;
-    fileName=view::enterNameOfFile();
+	string fileName=view::enterNameOfFile();
+	int numberOfExpression=1;
 	vector<string> stringsFromFile = fileReader::readVariablesAndExpression(fileName);
 	expressionTree currentTree;
 	currentTree.setRoot(currentTree.buildTree(stringsFromFile));
 	currentTree.printTree("", currentTree.getRoot(), false);
 	vector<string> calculatedVariablesAndExpressions;
-	int numberOfExpression=1;
 	currentTree.calculateTree(calculatedVariablesAndExpressions, currentTree.getRoot(), numberOfExpression);
-	for(int i=0;i<calculatedVariablesAndExpressions.size();i++)
-	{
-		cout<<calculatedVariablesAndExpressions[i]<<" = "<<currentTree.getVariables().at(calculatedVariablesAndExpressions[i])<<endl;
-	}
+	view::printResultsOfCalculations(calculatedVariablesAndExpressions, currentTree.getVariables());
 }
