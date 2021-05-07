@@ -38,6 +38,7 @@ double expressionTree::calculateNode(node* current)
 
 void expressionTree::build(const std::vector<std::string>& stringsFromFile)
 {
+	delete root;
 	root=(buildTree(stringsFromFile));
 }
 
@@ -46,10 +47,16 @@ void expressionTree::print()
 	printTree("", root, false);
 }
 
-void expressionTree::calculate(std::vector<std::string>& calculatedVariablesAndExpressions)
+void expressionTree::calculate()
 {
 	int numberOfExpression=1;
+	calculatedVariablesAndExpressions.clear();
 	calculateTree(calculatedVariablesAndExpressions, root, numberOfExpression);
+}
+
+std::vector<std::string> expressionTree::getCalculatedVariablesAndExpressions()
+{
+	return calculatedVariablesAndExpressions;
 }
 
 expressionTree::expressionTree():
