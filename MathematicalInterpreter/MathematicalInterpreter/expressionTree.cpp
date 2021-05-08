@@ -222,6 +222,32 @@ node* expressionTree::buildTree(std::vector<string> stringsFromFile)
                     statement->setChildren(buildTree(substringForElse), 2);
                 }
             }
+            else if (str[0] == 'd' && str[1] == 'o') {
+                node* statement = new node("do");
+                statementsList->setChildren(statement, counter++);
+                if ((i + 1) < stringsFromFile.size() ) {
+                    vector<string> substringForWhile;
+                    i++;
+                    int bracketsInElseCounter = 1;
+                    while (bracketsInElseCounter != 0)
+                    {
+                        i++;
+                        if (tokenizer::deleteWhiteSpaces(stringsFromFile[i])[0] == '}')
+                            bracketsInElseCounter--;
+                        else if (tokenizer::deleteWhiteSpaces(stringsFromFile[i])[0] == '{')
+                            bracketsInElseCounter++;
+                        if (bracketsInElseCounter != 0) {
+                            substringForWhile.push_back(tokenizer::deleteWhiteSpaces(stringsFromFile[i]));
+                        }
+                    }
+                    statement->setLeft(buildTree(substringForWhile));
+                    string str = tokenizer::deleteWhiteSpaces(stringsFromFile[++i]);
+                    string condition = str.substr(str.find('(') + 1);
+                    condition[condition.length() - 1] = ';';
+                    cout << condition << endl;
+                    statement->setRight(buildExpressionTree(tokenizer::splitExpressionIntoTokens(condition)));
+                }
+            }
             else {
                 statementsList->setChildren(buildExpressionTree(tokenizer::splitExpressionIntoTokens(str)), counter++);
             }
