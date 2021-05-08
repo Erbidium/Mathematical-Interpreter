@@ -274,11 +274,6 @@ void expressionTree::printTree(const string& prefix, node* node, bool isLeft)
     }
 }
 
-double expressionTree::calculateExpression()
-{
-	return calculateNode(root);
-}
-
 void expressionTree::calculateTree(std::vector<std::string> &calculatedVariablesAndExpressions, node * current, int &numberOfExpression)
 {
 	if((current!=nullptr)&&(current->getData()=="St. list"))
@@ -314,6 +309,14 @@ void expressionTree::calculateTree(std::vector<std::string> &calculatedVariables
                             calculateTree(calculatedVariablesAndExpressions, children->getChildren(2), numberOfExpression);
                         }
                     }
+                }
+                else if(children->getData()=="do")
+                {
+                	do
+                	{
+                		calculateTree(calculatedVariablesAndExpressions, children->getLeft(), numberOfExpression);
+                	}
+                	while(calculateNode(children->getRight()));
                 }
                 else
                 {

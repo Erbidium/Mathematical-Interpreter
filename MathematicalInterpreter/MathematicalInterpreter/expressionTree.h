@@ -14,7 +14,6 @@ class expressionTree
 	node* buildExpressionTree(std::vector<std::string> tokensFromExpression);
 	void printTree(const std::string& prefix, node* node, bool isLeft);
 	void calculateTree(std::vector<std::string> &calculatedVariablesAndExpressions, node * current, int &numberOfExpression);
-	double calculateExpression();
 public:
 	expressionTree();
 	~expressionTree();
